@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 from IPython.display import clear_output
+import sys
 import random
 
 def display_board(board):
@@ -23,7 +24,10 @@ def display_board(board):
 def player_input():
     marker = ''
     while not (marker == 'X' or marker == 'O'):
-        marker = raw_input('Player1, você quer ser X ou O?').upper()
+      if sys.version_info >= (3, 0):
+          marker = input('Player1, você quer ser X ou O?').upper()
+      else:
+          marker = raw_input('Player1, você quer ser X ou O?').upper()
 
     if marker == 'X':
         return ('X','O')
@@ -66,16 +70,22 @@ def player_choise(board):
     position = ' '
     posn = -1
     while position not in '1 2 3 4 5 6 7 8 9'.split() or not space_check(board, posn):
-        position = raw_input('Escolha a sua jogada (1 a 9):')
+        if sys.version_info >= (3, 0):
+            position = input('Escolha a sua jogada (1 a 9):')
+        else:
+            position = raw_input('Escolha a sua jogada (1 a 9):')
         posn = (int(position) - 1)
     return posn
 
 def replay():
-    return raw_input('Quer jogar novamente? "SIM" ou "NAO"').lower().startswith('s')
+    if sys.version_info >= (3, 0):
+        return input('Quer jogar novamente? "SIM" ou "NAO"').lower().startswith('s')
+    else:
+        return raw_input('Quer jogar novamente? "SIM" ou "NAO"').lower().startswith('s')
 
 #---------------------------------------------------------------------
 
-print("\n%s\nBeiriz - v1.0 - 02/06/2020\nBem vindo ao jogo da velha!\n%s\nPosições:" % ('#'*60,'#'*60))
+print("\n%s\nBeiriz - v1.1 - 02/06/2020\nBem vindo ao jogo da velha!\n%s\nPosições:" % ('#'*60,'#'*60))
 display_board(["1","2","3","4","5","6","7","8","9"])
 
 while True:
